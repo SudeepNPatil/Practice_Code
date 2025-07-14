@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { FaHeart } from "react-icons/fa";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setProducts } from "../Redux_toolkit/productSlice";
 
 export default function Product() {
 
-    const [myProduct, setProduct] = useState([])
+    const [myProduct, setmyProduct] = useState([])
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
 
@@ -14,7 +20,8 @@ export default function Product() {
 
                 let products = data.response.products;
 
-                setProduct(products);
+                setmyProduct(products);
+                dispatch(setProducts(products));
             })
 
     }, [])
@@ -25,14 +32,13 @@ export default function Product() {
 
             {myProduct.map((items, index) => (
 
-                <div key={index} className="rounded-3xl w-56 hover:scale-110 duration-700 ease-in-out cursor-pointer">
+                <Link to={`/Product/${items.id}`} key={index} className="rounded-3xl w-56 hover:scale-110 duration-700 ease-in-out cursor-pointer relative">
                     <img src={`${items.imageUrl}`} alt={`${items.id}`} className="w-fit h-fit rounded-3xl" />
                     <h1 className="text-md font-semibold pl-4 pt-2">{items.title}</h1>
                     <p className="text-gray-700 pl-4 pb-1">Prise :{items.price}</p>
-                </div>
+                    <FaHeart className="absolute text-2xl top-3  right-3  text-white hover:text-red-600" />
+                </Link>
             ))}
-
-
 
         </div>
     )

@@ -5,6 +5,9 @@ import App from './App.jsx'
 import { createBrowserRouter } from 'react-router-dom'
 import { RouterProvider } from 'react-router-dom'
 import Product from './Components/Product.jsx'
+import ProductDetails from './Components/ProductDetails.jsx'
+import { Provider } from 'react-redux'
+import { store } from './Redux_toolkit/store.jsx'
 
 
 
@@ -15,8 +18,13 @@ const myrouter = createBrowserRouter([
     children: [
       {
         path: 'Product',
-        element: <Product />
+        element: <Product />,
       },
+      {
+        path: 'Product/:productid',
+        element: <ProductDetails />
+      }
+
     ]
   }
 ])
@@ -24,6 +32,8 @@ const myrouter = createBrowserRouter([
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <RouterProvider router={myrouter} />
+    <Provider store={store}>
+      <RouterProvider router={myrouter} />
+    </Provider>
   </StrictMode>,
 )
